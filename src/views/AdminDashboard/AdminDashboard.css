@@ -1,0 +1,37 @@
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 40px;
+    padding: 40px;
+    background-color: #f1f5f9; /* color claro como en la imagen */
+    min-height: 100vh;
+  }
+  
+  .dashboard-card {
+    background-color: #f5e8c7;
+    border-radius: 8px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .dashboard-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .icon {
+    font-size: 50px;
+    color: #4b5563; /* tono gris como el de los íconos */
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #4b5563;
+  }
+  

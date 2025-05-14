@@ -1,0 +1,81 @@
+/* index.css */
+
+/* Fuente global */
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inria Serif', serif;
+}
+
+body {
+  background-color: #F2F2F2;
+  color: #0D0D0D;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #0D0D0D;
+  color: #F2CB57;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Enlaces del navbar */
+.navbar a {
+  color: #F2CB57;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Iconos en navbar */
+.navbar svg {
+  color: #F2F2F2;
+}
+
+/* Botones generales */
+button {
+  background-color: #0D0D0D;
+  color: #F2CB57;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #1a1a1a;
+}
+
+.card {
+  background-color: rgba(242, 203, 87, 0.25); /* #F2CB57 con 25% de opacidad */
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.tab-active {
+  background-color: #BFA145;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}

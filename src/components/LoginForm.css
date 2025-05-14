@@ -1,0 +1,87 @@
+/* LoginForm.css */
+
+.login-page {
+    display: flex;
+    height: 100vh;
+    background-color: #111;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .login-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    max-width: 400px;
+    margin-left: auto;
+  }
+  
+  .login-logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-input {
+    display: flex;
+    align-items: center;
+    background-color: #403816;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-input input {
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    flex: 1;
+    margin-left: 0.5rem;
+  }
+  
+  .login-input svg {
+    color: white;
+  }
+  
+  .eye-icon {
+    cursor: pointer;
+  }
+  
+  .login-link {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+    text-align: right;
+    cursor: pointer;
+  }
+  
+  .login-button {
+    width: 100%;
+    background-color: #403816;
+    border: none;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-footer {
+    font-size: 0.9rem;
+    color: #ccc;
+    text-align: center;
+  }
+  
