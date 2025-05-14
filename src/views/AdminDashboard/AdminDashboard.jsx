@@ -1,12 +1,13 @@
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
 import './adminDashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const roles = [
-  { label: 'Usuarios', key: 'usuarios', path: '/Home'},
-  { label: 'Técnico', key: 'tecnico', path: '/Soporte' },
-  { label: 'Vendedor', key: 'vendedor', path: '/Sale' },
-  { label: 'Admin', key: 'admin', path: '/Provider' },
+  { label: 'Usuarios', key: 'usuarios', path: '/'},
+  { label: 'Técnico', key: 'tecnico', path: '/tecnico' },
+  { label: 'Vendedor', key: 'vendedor', path: '/sale' },
+  { label: 'Admin', key: 'admin', path: '/provider' },
 ];
 
 const AdminDashboard = () => {
