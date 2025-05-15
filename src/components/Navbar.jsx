@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
-import './Navbar.css';
-import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa';
-
+import "./Navbar.css";
+import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,18 +14,30 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Sección izquierda */}
       <div className="navbar-left">
-        <img src={logo} alt="Logo" className="logo" style={{ width: '95px', height: 'auto' }} />
+        <img
+          src={logo}
+          alt="Logo"
+          className="logo"
+          style={{ width: "95px", height: "auto" }}
+        />
         <button className="navbar-toggle" onClick={toggleMenu}>
           ☰
         </button>
       </div>
-      <ul className={`navbar-menu ${isOpen ? 'active' : ''}`}>
-          <li><Link to="/">Vendedor</Link></li>
-          <li><Link to="/adminDashboard">Admin</Link></li>
-          <li><Link to="/contacto">Servicio Técnico</Link></li>
-          <li><Link to="/cart">Cart</Link></li>
+      <ul className={`navbar-menu ${isOpen ? "active" : ""}`}>
+        <li>
+          <Link to="/sale">Vendedor</Link>
+        </li>
+        <li>
+          <Link to="/adminDashboard">Admin</Link>
+        </li>
+        <li>
+          <Link to="/tecnico">Servicio Técnico</Link>
+        </li>
+        <li>
+          <Link to="/cart">Cart</Link>
+        </li>
       </ul>
-
 
       {/* Sección derecha */}
       <div className="navbar-right">

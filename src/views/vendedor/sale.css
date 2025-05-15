@@ -1,0 +1,18 @@
+.saleFiltros {
+    display: flex;
+    border: 1px solid red;
+    padding: 10px;
+    gap: 15px;
+
+    .saleWrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 3px;
+        border: 1px solid red;
+        gap: 2px;
+    }
+
+    .saleAcction {
+        border: 1px solid red;
+    }
+}
