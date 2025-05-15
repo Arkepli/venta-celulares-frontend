@@ -31,7 +31,7 @@ const Navbar = () => {
       </div>
 
       <ul className={`navbar-menu ${isOpen ? "active" : ""}`}>
-        <li onClick={() => handleNavigate("/")}>Vendedor</li>
+        <li onClick={() => handleNavigate("/vendedor")}>Vendedor</li>
         <li onClick={() => handleNavigate("/adminDashboard")}>Admin</li>
         <li onClick={() => handleNavigate("/tecnico")}>Servicio Técnico</li>
         <li onClick={() => handleNavigate("/cart")}>Cart</li>

@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { initialBrands } from '../data/brandData';
 
 export default function BrandsPage() {
-  const [brands, setBrands] = useState(initialBrands);
+  const [brands, setBrands] = useState([
+    "Samsung",
+    "Apple",
+    "Xiaomi",
+    "Huawei",
+    "Motorola"
+  ]);
+
   const [newBrand, setNewBrand] = useState('');
 
   const handleAddBrand = () => {

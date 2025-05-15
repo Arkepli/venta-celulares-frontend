@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import BrandDropdown from '../components/BrandDropdown';
-import { initialBrands } from '../data/brandData';
 
 export default function ProductsPage() {
   const [form, setForm] = useState({
@@ -12,7 +10,15 @@ export default function ProductsPage() {
   });
 
   const [products, setProducts] = useState([]);
-  const [brands] = useState(initialBrands); // Simulado
+
+  // Marcas quemadas, no se conectan con BrandsPage
+  const [brands] = useState([
+    "Samsung",
+    "Apple",
+    "Xiaomi",
+    "Huawei",
+    "Motorola"
+  ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,11 +41,17 @@ export default function ProductsPage() {
         </div>
         <div className="col-md-3">
           <label className="form-label">Marca</label>
-          <BrandDropdown
-            brands={brands}
-            selectedBrand={form.brand}
-            onChange={(e) => setForm(prev => ({ ...prev, brand: e.target.value }))}
-          />
+          <select
+            className="form-select"
+            name="brand"
+            value={form.brand}
+            onChange={handleChange}
+          >
+            <option value="">Seleccione una marca</option>
+            {brands.map((b, idx) => (
+              <option key={idx} value={b}>{b}</option>
+            ))}
+          </select>
         </div>
         <div className="col-md-3">
           <label className="form-label">Referencia</label>
