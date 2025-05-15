@@ -1,0 +1,149 @@
+/* Botón fijo inferior izquierdo */
+.btn-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-home:hover {
+  background: #0056b3;
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Contenedor principal */
+.container {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 32px 24px 48px 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* Título */
+h3 {
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 28px;
+}
+
+/* Formulario */
+form .form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+form .form-control,
+form .form-select {
+  border-radius: 8px;
+  box-shadow: none;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+  padding: 8px 12px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+form .form-control:focus,
+form .form-select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-success,
+.btn-secondary {
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 8px 0;
+  margin-right: 8px;
+}
+
+.btn-success {
+  background: #28a745;
+  border: none;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background: #495057;
+}
+
+/* Tabla */
+.table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.table th,
+.table td {
+  vertical-align: middle !important;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.table th {
+  background: #f1f3f5;
+  color: #343a40;
+  font-weight: 600;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:hover {
+  background-color: #e2e6ea;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px 4px 60px 4px;
+  }
+  .btn-home {
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+  .table th,
+  .table td {
+    font-size: 0.95rem;
+    padding: 6px;
+  }
+}
+
+/* Mensaje vacío */
+.table td.text-center {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* Scroll para tablas grandes */
+.table-responsive {
+  overflow-x: auto;
+}
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 4px;
+}

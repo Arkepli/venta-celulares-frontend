@@ -1,73 +1,91 @@
 .tecnico-container {
-    padding: 20px;
-    background-color: #f3f7fc;
-  }
-  
-  .titulo {
-    margin-bottom: 10px;
-  }
-  
-  .tabs {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .tab {
-    cursor: pointer;
-    color: gray;
-  }
-  
-  .tab.activo {
-    color: black;
-    border-bottom: 2px solid black;
-  }
-  
-  .filtros {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  
-  .filtros select,
-  .filtros input {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .btn {
-    padding: 5px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .limpiar {
-    background-color: #f3f3f3;
-    color: black;
-  }
-  
-  .consultar {
-    background-color: black;
-    color: white;
-  }
-  
-  .tabla {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-  }
-  
-  .tabla th {
-    background-color: #f0c419;
-    padding: 10px;
-  }
-  
-  .tabla td {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
+  padding: 20px;
+  background-color: #f3f7fc;
+}
+
+.titulo {
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.tab {
+  cursor: pointer;
+  color: gray;
+}
+
+.tab.activo {
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filtros select,
+.filtros input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.limpiar {
+  background-color: #f3f3f3;
+  color: black;
+}
+
+.consultar {
+  background-color: black;
+  color: white;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.tabla th {
+  background-color: #f0c419;
+  padding: 10px;
+}
+
+.tabla td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.btn-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-home:hover {
+  background: #0056b3;
+  transform: translateY(-2px) scale(1.05);
+}

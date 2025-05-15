@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import './Tecnico.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Tecnico.css";
 
 const Tecnico = () => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
-    causa: '',
-    fecha: '',
-    marca: '',
-    referencia: '',
+    causa: "",
+    fecha: "",
+    marca: "",
+    referencia: "",
   });
 
   const handleChange = (e) => {
@@ -14,32 +16,32 @@ const Tecnico = () => {
   };
 
   const handleLimpiar = () => {
-    setFilters({ causa: '', fecha: '', marca: '', referencia: '' });
+    setFilters({ causa: "", fecha: "", marca: "", referencia: "" });
   };
 
   const handleConsultar = () => {
     // Aquí iría la lógica de filtro
-    console.log('Consultando con filtros:', filters);
+    console.log("Consultando con filtros:", filters);
   };
 
   const citas = [
     {
-      cliente: 'Milena Cardozo',
-      cedula: '10245232020',
-      causa: 'Pantalla rota',
-      marca: 'Xiaomi',
-      referencia: 'Note 12S',
-      hora: '10:20 a.m',
-      fecha: '10/05/2025',
+      cliente: "Milena Cardozo",
+      cedula: "10245232020",
+      causa: "Pantalla rota",
+      marca: "Xiaomi",
+      referencia: "Note 12S",
+      hora: "10:20 a.m",
+      fecha: "10/05/2025",
     },
     {
-      cliente: 'Jose Prado',
-      cedula: '1023456852',
-      causa: 'Pantalla rota',
-      marca: 'Samsung',
-      referencia: 'A25',
-      hora: '09:40 a.m',
-      fecha: '10/05/2025',
+      cliente: "Jose Prado",
+      cedula: "1023456852",
+      causa: "Pantalla rota",
+      marca: "Samsung",
+      referencia: "A25",
+      hora: "09:40 a.m",
+      fecha: "10/05/2025",
     },
     // ... el resto de datos
   ];
@@ -47,7 +49,7 @@ const Tecnico = () => {
   return (
     <div className="tecnico-container">
       <h2 className="titulo">Técnico</h2>
-      
+
       <div className="tabs">
         <span className="tab activo">Citas</span>
         <span className="tab">Reparados</span>
@@ -61,15 +63,31 @@ const Tecnico = () => {
           <option value="Pantalla rota">Pantalla rota</option>
           <option value="Batería">Batería</option>
         </select>
-        <input type="text" name="fecha" placeholder="Fecha" value={filters.fecha} onChange={handleChange} />
+        <input
+          type="text"
+          name="fecha"
+          placeholder="Fecha"
+          value={filters.fecha}
+          onChange={handleChange}
+        />
         <select name="marca" value={filters.marca} onChange={handleChange}>
           <option value="">Marca</option>
           <option value="Samsung">Samsung</option>
           <option value="Xiaomi">Xiaomi</option>
         </select>
-        <input type="text" name="referencia" placeholder="Referencia" value={filters.referencia} onChange={handleChange} />
-        <button className="btn limpiar" onClick={handleLimpiar}>Limpiar</button>
-        <button className="btn consultar" onClick={handleConsultar}>Consultar</button>
+        <input
+          type="text"
+          name="referencia"
+          placeholder="Referencia"
+          value={filters.referencia}
+          onChange={handleChange}
+        />
+        <button className="btn limpiar" onClick={handleLimpiar}>
+          Limpiar
+        </button>
+        <button className="btn consultar" onClick={handleConsultar}>
+          Consultar
+        </button>
       </div>
 
       <table className="tabla">
@@ -96,6 +114,13 @@ const Tecnico = () => {
               <td>{item.fecha}</td>
             </tr>
           ))}
+
+          <button
+            className="btn btn-primary btn-home"
+            onClick={() => navigate("/")}
+          >
+            Volver a Home
+          </button>
         </tbody>
       </table>
     </div>

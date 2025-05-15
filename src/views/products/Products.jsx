@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    category: 'Celulares',
-    brand: '',
-    reference: '',
-    quantity: '',
-    date: ''
+    category: "Celulares",
+    brand: "",
+    reference: "",
+    quantity: "",
+    date: "",
   });
 
   const [products, setProducts] = useState([]);
@@ -17,18 +19,24 @@ export default function ProductsPage() {
     "Apple",
     "Xiaomi",
     "Huawei",
-    "Motorola"
+    "Motorola",
   ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setProducts([...products, form]);
-    setForm({ category: 'Celulares', brand: '', reference: '', quantity: '', date: '' });
+    setForm({
+      category: "Celulares",
+      brand: "",
+      reference: "",
+      quantity: "",
+      date: "",
+    });
   };
 
   return (
@@ -37,7 +45,12 @@ export default function ProductsPage() {
       <form onSubmit={handleSubmit} className="row g-3">
         <div className="col-md-3">
           <label className="form-label">Categoría</label>
-          <input className="form-control" value={form.category} name="category" onChange={handleChange} />
+          <input
+            className="form-control"
+            value={form.category}
+            name="category"
+            onChange={handleChange}
+          />
         </div>
         <div className="col-md-3">
           <label className="form-label">Marca</label>
@@ -49,24 +62,45 @@ export default function ProductsPage() {
           >
             <option value="">Seleccione una marca</option>
             {brands.map((b, idx) => (
-              <option key={idx} value={b}>{b}</option>
+              <option key={idx} value={b}>
+                {b}
+              </option>
             ))}
           </select>
         </div>
         <div className="col-md-3">
           <label className="form-label">Referencia</label>
-          <input className="form-control" name="reference" value={form.reference} onChange={handleChange} />
+          <input
+            className="form-control"
+            name="reference"
+            value={form.reference}
+            onChange={handleChange}
+          />
         </div>
         <div className="col-md-2">
           <label className="form-label">Cantidad</label>
-          <input className="form-control" name="quantity" type="number" value={form.quantity} onChange={handleChange} />
+          <input
+            className="form-control"
+            name="quantity"
+            type="number"
+            value={form.quantity}
+            onChange={handleChange}
+          />
         </div>
         <div className="col-md-3">
           <label className="form-label">Fecha</label>
-          <input className="form-control" name="date" type="date" value={form.date} onChange={handleChange} />
+          <input
+            className="form-control"
+            name="date"
+            type="date"
+            value={form.date}
+            onChange={handleChange}
+          />
         </div>
         <div className="col-md-2 d-flex align-items-end">
-          <button className="btn btn-success w-100" type="submit">Agregar</button>
+          <button className="btn btn-success w-100" type="submit">
+            Agregar
+          </button>
         </div>
       </form>
 
@@ -92,6 +126,12 @@ export default function ProductsPage() {
               <td>{p.date}</td>
             </tr>
           ))}
+          <button
+            className="btn btn-primary btn-home"
+            onClick={() => navigate("/")}
+          >
+            Regresar
+          </button>
         </tbody>
       </table>
     </div>
