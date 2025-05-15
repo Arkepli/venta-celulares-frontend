@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Tecnico from './pages/Tecnico';
 import Cart from './pages/Cart';
 import Provider from './views/provider/Provider';
+import Brands from './views/brands/brands'
+import Products from './views/products/Products'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/tecnico" element={<Tecnico />} />
         <Route path="/cart" element={<Cart />} />
         <Route path='/provider' element= {<Provider/>} />
+        <Route path= "/brands" element= {<Brands/>}/>
+        <Route path= "/products" element= {<Products/>}/>
       </Routes>
     </Router>
   );
