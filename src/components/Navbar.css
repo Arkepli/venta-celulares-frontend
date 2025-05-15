@@ -32,7 +32,7 @@
     top: 80px;
     left: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 0;
     z-index: 1000;
   }
   
@@ -42,6 +42,8 @@
   
   .navbar-menu li {
     margin-bottom: 1rem;
+    margin-left: 10px;
+    cursor: pointer;
   }
   
   .navbar-menu li:last-child {
@@ -84,7 +86,6 @@
   
   .divider {
     height: 20px;
-    width: 1px;
     background-color: #555;
   }
   
