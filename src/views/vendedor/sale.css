@@ -1,6 +1,14 @@
+.tabla tr th {
+    text-align: left;
+}
+
+.filtros {
+    display: flex;
+    justify-content: space-between;
+}
+
 .saleFiltros {
     display: flex;
-    border: 1px solid red;
     padding: 10px;
     gap: 15px;
 
@@ -8,11 +16,27 @@
         display: flex;
         flex-direction: column;
         padding: 3px;
-        border: 1px solid red;
         gap: 2px;
     }
 
-    .saleAcction {
-        border: 1px solid red;
+    label {
+        padding: 5px;
     }
+}
+
+.limpiar,
+.consultar {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: #F2CB57;
+    height: 45px;
+    padding: 20px;
+}
+
+.saleAcction {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
