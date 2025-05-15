@@ -1,0 +1,130 @@
+.tabla tr th {
+  text-align: left;
+}
+
+.filtros {
+  display: flex;
+  justify-content: space-between;
+}
+
+.saleFiltros {
+  display: flex;
+  padding: 10px;
+  gap: 15px;
+
+  .saleWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+    gap: 2px;
+  }
+
+  label {
+    padding: 5px;
+  }
+}
+
+.limpiar,
+.consultar {
+  display: flex;
+  align-items: center;
+  background-color: black;
+  color: #f2cb57;
+  height: 45px;
+  padding: 20px;
+}
+
+.saleAcction {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-agregar-celular {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e0e0e0;
+  padding: 22px 10px 12px 10px;
+  margin-bottom: 28px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-agregar-celular .row.g-3.align-items-end {
+  width: 100%;
+}
+
+.form-agregar-celular .form-label {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.form-agregar-celular .form-control,
+.form-agregar-celular .form-select {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  color: #222;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: border 0.2s;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.form-agregar-celular .form-control:focus,
+.form-agregar-celular .form-select:focus {
+  border: 1.5px solid #f2cb57;
+  outline: none;
+  background: #fffbe6;
+}
+
+.form-agregar-celular button[type="submit"] {
+  height: 44px;
+  background: #222;
+  color: #f2cb57;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background 0.2s;
+  padding: 0 36px;
+  font-size: 1.08rem;
+  letter-spacing: 1px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  margin-top: 10px;
+}
+
+.form-agregar-celular button[type="submit"]:hover {
+  background: #111;
+  color: #ffe082;
+}
+
+.form-agregar-celular .form-date-group,
+.form-agregar-celular .form-date-group input[type="date"],
+.form-agregar-celular .form-date-group label,
+.form-agregar-celular .form-date-group::after {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .form-agregar-celular {
+    max-width: 100%;
+    padding: 18px 4px 12px 4px;
+  }
+  .form-agregar-celular .row.g-3 > div {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

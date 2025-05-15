@@ -6,14 +6,14 @@
   import Cart from "./views/cart/Cart";
   import Provider from "./views/provider/Provider";
   import Brands from "./views/brands/brands";
-  import Products from "./views/products/Products";
+  import Celulares from "./views/products/Celulares";
   import Sale from "./views/vendedor/Sale";
 
 
   function App() {
     return (
       <>
-        {/* <Navbar /> */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
@@ -21,7 +21,7 @@
           <Route path="/cart" element={<Cart />} />
           <Route path="/provider" element={<Provider />} />
           <Route path="/brands" element={<Brands />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/celulares" element={<Celulares />} />
           <Route path="/vendedor" element={<Sale />} />
         </Routes>
       </>

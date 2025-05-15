@@ -1,7 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
-import Navbar from '../components/Navbar';
 /*import { getProductos } from '../services/api';*/
 
 const productosMock = [
@@ -105,7 +104,6 @@ export default function Home() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <Navbar/>
       <h2 style={{ marginBottom: '1rem' }}>Productos</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {productos.map(p => (
