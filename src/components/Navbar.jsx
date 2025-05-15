@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
-import './Navbar.css';
-import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import "./Navbar.css";
+import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,34 +11,32 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const handleNavigate = (path) => {
-    console.log('Navegando a:', path);
+    console.log("Navegando a:", path);
     navigate(path);
     setIsOpen(false); // opcional: cerrar el menú si está en móvil
   };
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <img src={logo} alt="Logo" className="logo" style={{ width: '95px' }} />
+        <img src={logo} alt="Logo" className="logo" style={{ width: "95px" }} />
         <button className="navbar-toggle" onClick={toggleMenu}>
           ☰
         </button>
       </div>
 
-      <ul className={`navbar-menu ${isOpen ? 'active' : ''}`}>
-        <li onClick={() => handleNavigate('/')}>Vendedor</li>
-        <li onClick={() => handleNavigate('/adminDashboard')}>Admin</li>
-        <li onClick={() => handleNavigate('/tecnico')}>Servicio Técnico</li>
-        <li onClick={() => handleNavigate('/cart')}>Cart</li>
-        <li onClick={() => handleNavigate('/brands')}>Marcas</li>
-        <li onClick={() => handleNavigate('/products')}>Productos</li>
-
-
+      <ul className={`navbar-menu ${isOpen ? "active" : ""}`}>
+        <li onClick={() => handleNavigate("/")}>Vendedor</li>
+        <li onClick={() => handleNavigate("/adminDashboard")}>Admin</li>
+        <li onClick={() => handleNavigate("/tecnico")}>Servicio Técnico</li>
+        <li onClick={() => handleNavigate("/cart")}>Cart</li>
+        <li onClick={() => handleNavigate("/brands")}>Marcas</li>
+        <li onClick={() => handleNavigate("/products")}>Productos</li>
       </ul>
 
       <div className="navbar-right">
