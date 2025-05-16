@@ -146,7 +146,7 @@ export default function ProductsPage() {
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">Inventario de Celulares</h2>
+      <h2 className="titulo">INVENTARIO DE CELULARES</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">

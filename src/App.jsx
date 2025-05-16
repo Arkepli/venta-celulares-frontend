@@ -8,6 +8,7 @@ import Brands from "./views/brands/brands";;
 import Sale from "./views/vendedor/Sale";
 import Accesorios from "./views/accesorios/Accesorios";
 import MantenimientoTecnico from "./views/MantenimientoTecnico/MantenimientoTecnico";
+import "./App.css";
 
 
   function App() {

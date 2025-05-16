@@ -124,7 +124,7 @@ export default function Proveedores() {
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">Gestión de Proveedores</h2>
+      <h2 className="titulo">GESTIÓN DE PROVEEDORES</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">

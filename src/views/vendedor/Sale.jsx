@@ -124,7 +124,7 @@ export default function Sale() {
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">Gestión de Ventas</h2>
+      <h2 className="titulo">GESTIÓN DE VENTAS</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">

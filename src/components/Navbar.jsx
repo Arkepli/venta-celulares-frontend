@@ -31,12 +31,12 @@ const Navbar = () => {
       </div>
 
       <ul className={`navbar-menu ${isOpen ? "active" : ""}`}>
-        <li onClick={() => handleNavigate("/celulares")}>Celulares</li>
-        <li onClick={() => handleNavigate("/ventas")}>Ventas</li>
-        <li onClick={() => handleNavigate("/accesorios")}>Accesorios</li>
-        <li onClick={() => handleNavigate("/brands")}>Marcas</li>
-        <li onClick={() => handleNavigate("/mantenimiento-tecnico")}>Mantenimiento Técnico</li>
-        <li onClick={() => handleNavigate("/proveedores")}>Proveedores</li>
+        <li onClick={() => handleNavigate("/celulares")}>CELULARES</li>
+        <li onClick={() => handleNavigate("/ventas")}>VENTAS</li>
+        <li onClick={() => handleNavigate("/accesorios")}>ACCESORIOS</li>
+        <li onClick={() => handleNavigate("/brands")}>MARCAS</li>
+        <li onClick={() => handleNavigate("/mantenimiento-tecnico")}>MANTENIMIENTO TÉCNICO</li>
+        <li onClick={() => handleNavigate("/proveedores")}>PROVEEDORES</li>
       </ul>
 
       <div className="navbar-right">
