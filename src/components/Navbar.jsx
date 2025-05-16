@@ -35,8 +35,8 @@ const Navbar = () => {
         <li onClick={() => handleNavigate("/vendedor")}>Vendedor</li>
         <li onClick={() => handleNavigate("/clientes")}>Clientes</li>
         <li onClick={() => handleNavigate("/brands")}>Marcas</li>
+        <li onClick={() => handleNavigate("/products")}>Productos</li>
         <li onClick={() => handleNavigate("/provider")}>Proveedores</li>
-        <li onClick={() => handleNavigate("/categorias")}>Categorías</li>
       </ul>
 
       <div className="navbar-right">

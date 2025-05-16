@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Provider.css";
+import React, { useState } from 'react';
+import './Provider.css';
+import ModalEditarPro from './modalEditar/modalEditar'; // Verifica esta ruta
+import ModalAgregarPro from './modalAgregar/modalAgregar'; // Verifica esta ruta
 
 const Provider = () => {
   const navigate = useNavigate();
@@ -89,15 +90,43 @@ const Provider = () => {
     },
   ]);
 
+  const [modalAgregarVisible, setModalAgregarProveedor] = useState(false);
+  const [modalEditarVisible, setModalEditarVisible] = useState(false);
+  const [providerSeleccionada, setProveedorSeleccionada] = useState(null);
+
   const handleLimpiar = () => {
     setProveedor("");
     setSaldo("");
   };
 
-  const filteredData = data.filter(
-    (item) =>
-      (!proveedor || item.proveedor === proveedor) &&
-      (!saldo || item.saldo === saldo)
+  const handleAgregar = (nuevoProveedor) => {
+    setData([nuevoProveedor, ...data]);
+    setModalAgregarProveedor(false);
+  };
+
+  const handleEditar = (proveedor) => {
+    setProveedorSeleccionada(proveedor);
+    setModalEditarVisible(true);
+  };
+
+  const handleActualizar = (proveedorActualizado) => {
+    const actualizadas = data.map((item) =>
+      item === providerSeleccionada ? proveedorActualizado : item
+    );
+    setData(actualizadas);
+    setProveedorSeleccionada(null);
+    setModalEditarVisible(false);
+  };
+
+  const handleEliminar = (proveedorAEliminar) => {
+    const filtradas = data.filter((item) => item !== proveedorAEliminar);
+    setData(filtradas);
+  };
+
+  const filteredData = data.filter(item =>
+    (!proveedor || item.proveedor === proveedor) &&
+    (!saldo || item.saldo === saldo)
+
   );
 
   return (
@@ -128,9 +157,9 @@ const Provider = () => {
           <option value="Pagado">Pagado</option>
         </select>
 
-        <button onClick={handleLimpiar} className="provider-button">
-          Limpiar
-        </button>
+        <button onClick={handleLimpiar} className="provider-button">Limpiar</button>
+        <button className="btn consultar" onClick={() => setModalAgregarProveedor(true)}>Agregar</button>
+
       </div>
 
       <div className="provider-table-container">
@@ -145,6 +174,7 @@ const Provider = () => {
               <th>N° Factura</th>
               <th>Fecha</th>
               <th>Saldo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -158,6 +188,10 @@ const Provider = () => {
                 <td>{item.factura}</td>
                 <td>{item.fecha}</td>
                 <td>{item.saldo}</td>
+                <td>
+                  <button className="btn editar" onClick={() => handleEditar(item)}>Editar</button>
+                  <button className="btn eliminar" onClick={() => handleEliminar(item)}>Eliminar</button>
+                </td>
               </tr>
             ))}
 
@@ -170,6 +204,21 @@ const Provider = () => {
           </tbody>
         </table>
       </div>
+
+      {modalAgregarVisible && (
+        <ModalAgregarPro
+          onClose={() => setModalAgregarProveedor(false)}
+          onAgregar={handleAgregar}
+        />
+      )}
+
+      {modalEditarVisible && (
+        <ModalEditarPro
+          proveedor={providerSeleccionada}
+          onClose={() => setModalEditarVisible(false)}
+          onActualizar={handleActualizar}
+        />
+      )}
     </div>
   );
 };
