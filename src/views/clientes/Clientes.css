@@ -5,7 +5,10 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   margin-top: 40px;
   margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
 }
+
 
 h3 {
   font-weight: 700;
@@ -240,5 +243,53 @@ form .form-control:focus {
     bottom: 10px;
     left: 10px;
     border-radius: 20px;
+  }
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 992px) {
+  .clientes-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .provider-filters {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .clientes-container {
+    padding: 8px 2px 32px 2px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .provider-container {
+    padding: 0.5rem;
+  }
+  .provider-title {
+    font-size: 1.1rem;
+  }
+  .provider-table th,
+  .provider-table td {
+    padding: 6px;
+    font-size: 0.95rem;
+  }
+  .table th,
+  .table td {
+    font-size: 0.9rem;
+    padding: 4px;
+  }
+}
+
+/* Make tables scrollable on small screens */
+@media (max-width: 600px) {
+  .provider-table-container,
+  .table {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
   }
 }
