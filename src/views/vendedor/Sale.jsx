@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Sale.css";
 
 const Sale = () => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     causa: "",
     fecha: "",
@@ -157,6 +159,12 @@ const Sale = () => {
               </td>
             </tr>
           ))}
+          <button
+            className="btn btn-success btn-home"
+            onClick={() => navigate("/")}
+          >
+            Regresar
+          </button>
         </tbody>
       </table>
     </div>
