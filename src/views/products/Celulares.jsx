@@ -462,12 +462,6 @@ export default function ProductsPage() {
           </div>
         </div>
       )}
-      <button
-        className="btn btn-success btn-home"
-        onClick={() => navigate("/")}
-      >
-        Regresar
-      </button>
     </div>
   );
 }
