@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Provider.css';
+import ModalEditarPro from './modalEditar/modalEditar'; // Verifica esta ruta
+import ModalAgregarPro from './modalAgregar/modalAgregar'; // Verifica esta ruta
 
 const Provider = () => {
   const [proveedor, setProveedor] = useState('');
@@ -15,9 +17,37 @@ const Provider = () => {
     { producto: 'Estuche de Lujo', proveedor: 'CaseBoom', cantidad: 35, unidad: 15000, total: 525000, factura: 'Case-09102020', fecha: '08/07/2024', saldo: 'Pagado' }
   ]);
 
+  const [modalAgregarVisible, setModalAgregarProveedor] = useState(false);
+  const [modalEditarVisible, setModalEditarVisible] = useState(false);
+  const [providerSeleccionada, setProveedorSeleccionada] = useState(null);
+
   const handleLimpiar = () => {
     setProveedor('');
     setSaldo('');
+  };
+
+  const handleAgregar = (nuevoProveedor) => {
+    setData([nuevoProveedor, ...data]);
+    setModalAgregarProveedor(false);
+  };
+
+  const handleEditar = (proveedor) => {
+    setProveedorSeleccionada(proveedor);
+    setModalEditarVisible(true);
+  };
+
+  const handleActualizar = (proveedorActualizado) => {
+    const actualizadas = data.map((item) =>
+      item === providerSeleccionada ? proveedorActualizado : item
+    );
+    setData(actualizadas);
+    setProveedorSeleccionada(null);
+    setModalEditarVisible(false);
+  };
+
+  const handleEliminar = (proveedorAEliminar) => {
+    const filtradas = data.filter((item) => item !== proveedorAEliminar);
+    setData(filtradas);
   };
 
   const filteredData = data.filter(item =>
@@ -46,6 +76,7 @@ const Provider = () => {
         </select>
 
         <button onClick={handleLimpiar} className="provider-button">Limpiar</button>
+        <button className="btn consultar" onClick={() => setModalAgregarProveedor(true)}>Agregar</button>
       </div>
 
       <div className="provider-table-container">
@@ -60,6 +91,7 @@ const Provider = () => {
               <th>N° Factura</th>
               <th>Fecha</th>
               <th>Saldo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -73,11 +105,30 @@ const Provider = () => {
                 <td>{item.factura}</td>
                 <td>{item.fecha}</td>
                 <td>{item.saldo}</td>
+                <td>
+                  <button className="btn editar" onClick={() => handleEditar(item)}>Editar</button>
+                  <button className="btn eliminar" onClick={() => handleEliminar(item)}>Eliminar</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {modalAgregarVisible && (
+        <ModalAgregarPro
+          onClose={() => setModalAgregarProveedor(false)}
+          onAgregar={handleAgregar}
+        />
+      )}
+
+      {modalEditarVisible && (
+        <ModalEditarPro
+          proveedor={providerSeleccionada}
+          onClose={() => setModalEditarVisible(false)}
+          onActualizar={handleActualizar}
+        />
+      )}
     </div>
   );
 };

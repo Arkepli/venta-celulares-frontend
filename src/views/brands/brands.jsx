@@ -1,61 +1,81 @@
 import React, { useState } from 'react';
 import './Brands.css';
+import ModalAgregar from './modalAgregar/modalAgregar';
+import ModalEditar from './modalEditar/modalEditar';
 
 const Brands = () => {
   const [filters, setFilters] = useState({
     marca: '',
     pais: '',
-    fecha: '',
-    industria: '',
     empresa: '',
-    acciones: '',
   });
+
+  const [brands, setBrands] = useState([
+    {
+      marca: 'Samsung',
+      pais: 'Corea del Sur',
+      industria: 'Samsung inc.',
+      empresa: 'ID PLUS',
+      fecha: '10/05/2025',
+    },
+    {
+      marca: 'Apple',
+      pais: 'Estados Unidos',
+      industria: 'Apple on.',
+      empresa: 'ID STORE',
+      fecha: '09/05/2025',
+    },
+    {
+      marca: 'Xiaomi',
+      pais: 'China',
+      industria: 'Xiaomi inc.',
+      empresa: 'ID PLUS',
+      fecha: '08/05/2025',
+    },
+  ]);
+
+  const [modalAgregarVisible, setModalAgregarVisible] = useState(false);
+  const [modalEditarVisible, setModalEditarVisible] = useState(false);
+  const [marcaSeleccionada, setMarcaSeleccionada] = useState(null);
 
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
   const handleLimpiar = () => {
-    setFilters({ marca: '', pais: '', fecha: '', industria: '', empresa: '', acciones: ''});
+    setFilters({ marca: '', pais: '', empresa: '' });
   };
 
-  const handleConsultar = () => {
-    console.log('Consultando con filtros:', filters);
+  const handleAgregar = (nuevaMarca) => {
+    setBrands([nuevaMarca, ...brands]);
+    setModalAgregarVisible(false);
   };
 
-  const handleEditar = (item) => {
-    console.log('Editar:', item);
+  const handleEditar = (marca) => {
+    setMarcaSeleccionada(marca);
+    setModalEditarVisible(true);
   };
-  
-  const handleEliminar = (item) => {
-    console.log('Eliminar:', item);
+
+  const handleActualizar = (marcaActualizada) => {
+    const actualizadas = brands.map((b) =>
+      b === marcaSeleccionada ? marcaActualizada : b
+    );
+    setBrands(actualizadas);
+    setMarcaSeleccionada(null);
+    setModalEditarVisible(false);
   };
-  const brands = [
-    {
-      marca: 'Samsung',
-      pais: 'Corea del Sur',
-      industria: 'Samsung inc.',
-      empresa:  'ID PLUS',
-      fecha: '10/05/2025',
-      acciones: ''
-    },
-    {
-      marca: 'Apple',
-      pais: 'Estados Unidos',
-      industria: 'Apple on.',
-      empresa:  'ID STORE',
-      fecha: '09/05/2025',
-      acciones: ''
-    },
-    {
-      marca: 'Xiaomi',
-      pais: 'China',
-      industria: 'Xiaomi inc.',
-      empresa:  'ID PLUS',
-      fecha: '08/05/2025',
-      acciones: ''
-    },
-  ];
+
+  const handleEliminar = (marcaAEliminar) => {
+    const filtradas = brands.filter((b) => b !== marcaAEliminar);
+    setBrands(filtradas);
+  };
+
+  // Aplicar filtros
+  const marcasFiltradas = brands.filter((item) =>
+    item.marca.toLowerCase().includes(filters.marca.toLowerCase()) &&
+    item.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
+    item.empresa.toLowerCase().includes(filters.empresa.toLowerCase())
+  );
 
   return (
     <div className="brands-container">
@@ -84,7 +104,7 @@ const Brands = () => {
           onChange={handleChange}
         />
         <button className="btn limpiar" onClick={handleLimpiar}>Limpiar</button>
-        <button className="btn consultar" onClick={handleConsultar}>Consultar</button>
+        <button className="btn consultar" onClick={() => setModalAgregarVisible(true)}>Agregar</button>
       </div>
 
       <table className="tabla">
@@ -94,24 +114,42 @@ const Brands = () => {
             <th>País</th>
             <th>Industria</th>
             <th>Empresa</th>
-            <th>Fecha de Fabricación</th>
+            <th>Fecha</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {brands.map((item, index) => (
+          {marcasFiltradas.map((item, index) => (
             <tr key={index}>
               <td>{item.marca}</td>
               <td>{item.pais}</td>
               <td>{item.industria}</td>
               <td>{item.empresa}</td>
               <td>{item.fecha}</td>
-              <td><button className="btn editar" onClick={() => handleEditar(item)}>Editar</button>
-              <button className="btn eliminar" onClick={() => handleEliminar(item)}>Eliminar</button></td>
+              <td>
+                <button className="btn editar" onClick={() => handleEditar(item)}>Editar</button>
+                <button className="btn eliminar" onClick={() => handleEliminar(item)}>Eliminar</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {modalAgregarVisible && (
+        <ModalAgregar
+          onClose={() => setModalAgregarVisible(false)}
+          onAgregar={handleAgregar} 
+          // onAgregar={ModalAgregar} 
+        />
+      )}
+
+      {modalEditarVisible && (
+        <ModalEditar
+          marca={marcaSeleccionada}
+          onClose={() => setModalEditarVisible(false)}
+          onActualizar={handleActualizar}
+        />
+      )}
     </div>
   );
 };
