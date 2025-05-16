@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Celulares.css";
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     category: "Celulares",
     brand: "",
@@ -460,6 +462,12 @@ export default function ProductsPage() {
           </div>
         </div>
       )}
+      <button
+        className="btn btn-success btn-home"
+        onClick={() => navigate("/")}
+      >
+        Regresar
+      </button>
     </div>
   );
 }
