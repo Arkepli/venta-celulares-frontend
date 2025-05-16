@@ -24,19 +24,19 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <img src={logo} alt="Logo" className="logo" style={{ width: "95px" }} />
+        <img onClick={() => handleNavigate("/")} src={logo} alt="Logo" className="logo" style={{ width: "95px" }} />
         <button className="navbar-toggle" onClick={toggleMenu}>
           ☰
         </button>
       </div>
 
       <ul className={`navbar-menu ${isOpen ? "active" : ""}`}>
+        <li onClick={() => handleNavigate("/celulares")}>Celulares</li>
         <li onClick={() => handleNavigate("/vendedor")}>Vendedor</li>
-        <li onClick={() => handleNavigate("/adminDashboard")}>Admin</li>
-        <li onClick={() => handleNavigate("/tecnico")}>Servicio Técnico</li>
-        <li onClick={() => handleNavigate("/cart")}>Cart</li>
+        <li onClick={() => handleNavigate("/clientes")}>Clientes</li>
         <li onClick={() => handleNavigate("/brands")}>Marcas</li>
-        <li onClick={() => handleNavigate("/products")}>Productos</li>
+        <li onClick={() => handleNavigate("/provider")}>Proveedores</li>
+        <li onClick={() => handleNavigate("/categorias")}>Categorías</li>
       </ul>
 
       <div className="navbar-right">
