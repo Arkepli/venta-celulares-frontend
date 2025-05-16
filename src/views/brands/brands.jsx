@@ -1,48 +1,119 @@
 import React, { useState } from 'react';
+import './Brands.css';
 
-export default function BrandsPage() {
-  const [brands, setBrands] = useState([
-    "Samsung",
-    "Apple",
-    "Xiaomi",
-    "Huawei",
-    "Motorola"
-  ]);
+const Brands = () => {
+  const [filters, setFilters] = useState({
+    marca: '',
+    pais: '',
+    fecha: '',
+    industria: '',
+    empresa: '',
+    acciones: '',
+  });
 
-  const [newBrand, setNewBrand] = useState('');
-
-  const handleAddBrand = () => {
-    if (newBrand && !brands.includes(newBrand)) {
-      setBrands([...brands, newBrand]);
-      setNewBrand('');
-    }
+  const handleChange = (e) => {
+    setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const handleDelete = (brandToDelete) => {
-    setBrands(brands.filter(b => b !== brandToDelete));
+  const handleLimpiar = () => {
+    setFilters({ marca: '', pais: '', fecha: '', industria: '', empresa: '', acciones: ''});
   };
+
+  const handleConsultar = () => {
+    console.log('Consultando con filtros:', filters);
+  };
+
+  const handleEditar = (item) => {
+    console.log('Editar:', item);
+  };
+  
+  const handleEliminar = (item) => {
+    console.log('Eliminar:', item);
+  };
+  const brands = [
+    {
+      marca: 'Samsung',
+      pais: 'Corea del Sur',
+      industria: 'Samsung inc.',
+      empresa:  'ID PLUS',
+      fecha: '10/05/2025',
+      acciones: ''
+    },
+    {
+      marca: 'Apple',
+      pais: 'Estados Unidos',
+      industria: 'Apple on.',
+      empresa:  'ID STORE',
+      fecha: '09/05/2025',
+      acciones: ''
+    },
+    {
+      marca: 'Xiaomi',
+      pais: 'China',
+      industria: 'Xiaomi inc.',
+      empresa:  'ID PLUS',
+      fecha: '08/05/2025',
+      acciones: ''
+    },
+  ];
 
   return (
-    <div className="container mt-4">
-      <h3>Administrar Marcas</h3>
-      <div className="d-flex mb-3">
+    <div className="brands-container">
+      <h2 className="titulo">Marcas</h2>
+
+      <div className="filtros">
         <input
           type="text"
-          className="form-control me-2"
-          value={newBrand}
-          onChange={(e) => setNewBrand(e.target.value)}
-          placeholder="Nueva marca"
+          name="marca"
+          placeholder="Marcas"
+          value={filters.marca}
+          onChange={handleChange}
         />
-        <button className="btn btn-primary" onClick={handleAddBrand}>Agregar</button>
+        <input
+          type="text"
+          name="pais"
+          placeholder="País"
+          value={filters.pais}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="empresa"
+          placeholder="Empresa"
+          value={filters.empresa}
+          onChange={handleChange}
+        />
+        <button className="btn limpiar" onClick={handleLimpiar}>Limpiar</button>
+        <button className="btn consultar" onClick={handleConsultar}>Consultar</button>
       </div>
-      <ul className="list-group">
-        {brands.map((brand, idx) => (
-          <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
-            {brand}
-            <button className="btn btn-sm btn-danger" onClick={() => handleDelete(brand)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+
+      <table className="tabla">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Industria</th>
+            <th>Empresa</th>
+            <th>Fecha de Fabricación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {brands.map((item, index) => (
+            <tr key={index}>
+              <td>{item.marca}</td>
+              <td>{item.pais}</td>
+              <td>{item.industria}</td>
+              <td>{item.empresa}</td>
+              <td>{item.fecha}</td>
+              <td><button className="btn editar" onClick={() => handleEditar(item)}>Editar</button>
+              <button className="btn eliminar" onClick={() => handleEliminar(item)}>Eliminar</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
+
+export default Brands;
