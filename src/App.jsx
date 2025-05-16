@@ -1,18 +1,32 @@
-  import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-  import AdminDashboard from "./views/AdminDashboard/AdminDashboard";
-  import Home from "./views/Home";
-  import Tecnico from "./views/tecnico/Tecnico";
-  import Cart from "./views/cart/Cart";
-  import Provider from "./views/provider/Provider";
-  import Brands from  './views/brands/Brands';
-  import Products from "./views/products/Products";
-  import Sale from "./views/vendedor/Sale";
+
+ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./views/Home";
+import Provider from "./views/provider/Provider";
+import Brands from "./views/brands/brands";
+import Celulares from "./views/products/Celulares";
+import Sale from "./views/vendedor/Sale";
+import Clientes from "./views/clientes/clientes";
   import ModalAgrergar from './views/brands/modalAgregar/modalAgregar';
   import ModalEditar from './views/brands/modalEditar/modalEditar';
   import ModalAgrergarPro from './views/provider/modalAgregar/modalAgregar';
   import ModalEditarPro from './views/provider/modalEditar/modalEditar';
 
-
+function App() {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/provider" element={<Provider />} />
+        <Route path="/brands" element={<Brands />} />
+        <Route path="/celulares" element={<Celulares />} />
+        <Route path="/vendedor" element={<Sale />} />
+        <Route path="/clientes" element={<Clientes />} />
+      </Routes>
+    </>
+  );
+}
 
   function App() {
     return (
