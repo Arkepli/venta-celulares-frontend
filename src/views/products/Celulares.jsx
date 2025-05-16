@@ -15,18 +15,13 @@ export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
-  const [brands] = useState([
-    "Samsung",
-    "Apple",
-    "Xiaomi",
-    "Huawei",
-    "Motorola",
-  ]);
+  const [brands, setBrands] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCelular, setSelectedCelular] = useState(null);
 
   // Backend URL
   const API_URL = "http://localhost:8002/celulares";
+  const BRANDS_API_URL = "http://localhost:8002/marcas";
 
   // Fetch all celulares
   const fetchProducts = async () => {
@@ -35,8 +30,20 @@ export default function ProductsPage() {
     setProducts(data);
   };
 
+  // Fetch brands from backend
+  const fetchBrands = async () => {
+    try {
+      const res = await fetch(BRANDS_API_URL);
+      const data = await res.json();
+      setBrands(data);
+    } catch (err) {
+      setBrands([]);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchBrands();
   }, []);
 
   // Handle form changes
@@ -168,9 +175,9 @@ export default function ProductsPage() {
               onChange={handleChange}
             >
               <option value="">Seleccione una marca</option>
-              {brands.map((b, idx) => (
-                <option key={idx} value={b}>
-                  {b}
+              {brands.map((b) => (
+                <option key={b._id} value={b.nombre}>
+                  {b.nombre}
                 </option>
               ))}
             </select>
@@ -261,9 +268,9 @@ export default function ProductsPage() {
                       onChange={handleEditChange}
                     >
                       <option value="">Seleccione una marca</option>
-                      {brands.map((b, idx) => (
-                        <option key={idx} value={b}>
-                          {b}
+                      {brands.map((b) => (
+                        <option key={b._id} value={b.nombre}>
+                          {b.nombre}
                         </option>
                       ))}
                     </select>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Sale.css";
 
 const API_URL = "http://localhost:8002/ventas";
+const CELULARES_API_URL = "http://localhost:8002/celulares";
 
 export default function Sale() {
   const [form, setForm] = useState({
@@ -16,6 +17,7 @@ export default function Sale() {
   const [editForm, setEditForm] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedVenta, setSelectedVenta] = useState(null);
+  const [celulares, setCelulares] = useState([]);
 
   const fetchVentas = async () => {
     const res = await fetch(API_URL);
@@ -23,8 +25,20 @@ export default function Sale() {
     setVentas(data);
   };
 
+  // Obtener celulares para el dropdown
+  const fetchCelulares = async () => {
+    try {
+      const res = await fetch(CELULARES_API_URL);
+      const data = await res.json();
+      setCelulares(data);
+    } catch (err) {
+      setCelulares([]);
+    }
+  };
+
   useEffect(() => {
     fetchVentas();
+    fetchCelulares();
   }, []);
 
   const handleChange = (e) => {
@@ -159,13 +173,19 @@ export default function Sale() {
           </div>
           <div className="col-md-3">
             <label className="form-label">Celular vendido</label>
-            <input
+            <select
               className="form-control"
               name="celular"
               value={form.celular}
               onChange={handleChange}
-              placeholder="Ej: Samsung S24"
-            />
+            >
+              <option value="">Seleccione un celular</option>
+              {celulares.map((c) => (
+                <option key={c._id} value={c.reference}>
+                  {c.reference}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="col-md-2">
             <label className="form-label">Cantidad</label>
@@ -228,12 +248,19 @@ export default function Sale() {
                     />
                   </td>
                   <td>
-                    <input
+                    <select
                       className="form-control"
                       name="celular"
                       value={editForm.celular}
                       onChange={handleEditChange}
-                    />
+                    >
+                      <option value="">Seleccione un celular</option>
+                      {celulares.map((c) => (
+                        <option key={c._id} value={c.reference}>
+                          {c.reference}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                   <td>
                     <input

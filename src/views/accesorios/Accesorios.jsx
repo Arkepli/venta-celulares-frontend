@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Accesorios.css";
 
 const API_URL = "http://localhost:8002/accesorios";
+const MARCAS_API_URL = "http://localhost:8002/marcas";
 
 export default function Accesorios() {
   const [form, setForm] = useState({
@@ -16,6 +17,7 @@ export default function Accesorios() {
   const [editForm, setEditForm] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedAccesorio, setSelectedAccesorio] = useState(null);
+  const [marcas, setMarcas] = useState([]);
 
   const fetchAccesorios = async () => {
     const res = await fetch(API_URL);
@@ -23,8 +25,20 @@ export default function Accesorios() {
     setAccesorios(data);
   };
 
+  // Obtener marcas para el dropdown
+  const fetchMarcas = async () => {
+    try {
+      const res = await fetch(MARCAS_API_URL);
+      const data = await res.json();
+      setMarcas(data);
+    } catch (err) {
+      setMarcas([]);
+    }
+  };
+
   useEffect(() => {
     fetchAccesorios();
+    fetchMarcas();
   }, []);
 
   const handleChange = (e) => {
@@ -133,13 +147,19 @@ export default function Accesorios() {
           </div>
           <div className="col-md-2">
             <label className="form-label">Marca</label>
-            <input
+            <select
               className="form-control"
               name="marca"
               value={form.marca}
               onChange={handleChange}
-              placeholder="Ej: Samsung"
-            />
+            >
+              <option value="">Seleccione una marca</option>
+              {marcas.map((m) => (
+                <option key={m._id} value={m.nombre}>
+                  {m.nombre}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="col-md-2">
             <label className="form-label">Color</label>
@@ -208,12 +228,19 @@ export default function Accesorios() {
                     />
                   </td>
                   <td>
-                    <input
+                    <select
                       className="form-control"
                       name="marca"
                       value={editForm.marca}
                       onChange={handleEditChange}
-                    />
+                    >
+                      <option value="">Seleccione una marca</option>
+                      {marcas.map((m) => (
+                        <option key={m._id} value={m.nombre}>
+                          {m.nombre}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                   <td>
                     <input
