@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./clientes.css";
 
@@ -12,6 +12,14 @@ export default function Clientes() {
     direccion: "",
   });
   const [clientes, setClientes] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8002/clientes")
+      .then((res) => res.json())
+      .then((data) => setClientes(data))
+      .catch((err) => console.error("Error al obtener clientes:", err));
+  }, []);
+
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -31,15 +39,25 @@ export default function Clientes() {
       setError("Por favor, completa todos los campos.");
       return;
     }
-    setClientes([...clientes, form]);
-    setForm({
-      nombre: "",
-      cedula: "",
-      telefono: "",
-      email: "",
-      direccion: "",
-    });
-    setError("");
+
+    fetch("http://localhost:8002/clientes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+      .then((res) => res.json())
+      .then((nuevoCliente) => {
+        setClientes([...clientes, nuevoCliente]);
+        setForm({
+          nombre: "",
+          cedula: "",
+          telefono: "",
+          email: "",
+          direccion: "",
+        });
+        setError("");
+      })
+      .catch(() => setError("Error al agregar cliente."));
   };
 
   const handleClear = () => {
@@ -54,7 +72,14 @@ export default function Clientes() {
   };
 
   const handleDelete = (idx) => {
-    setClientes(clientes.filter((_, i) => i !== idx));
+    const clienteAEliminar = clientes[idx];
+    fetch(`http://localhost:8002/clientes/${clienteAEliminar._id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setClientes(clientes.filter((_, i) => i !== idx));
+      })
+      .catch(() => setError("Error al eliminar cliente."));
   };
 
   return (
