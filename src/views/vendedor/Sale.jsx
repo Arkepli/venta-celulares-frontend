@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import "./Sale.css";
+import AgregarModal from "./modalAgregar/agregar-modal";
 
 const Sale = () => {
+  const [phones, setPhones] = useState([]);
+  const [selectedPhone, setSelectedPhone] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [nuevoProducto, setNuevoProducto] = useState({
+    producto: "",
+    factor: "",
+    referencia: "",
+    precio: "",
+    cantidad: "",
+    fecha: "",
+  });
+
   const [filters, setFilters] = useState({
     causa: "",
     fecha: "",
@@ -17,12 +31,35 @@ const Sale = () => {
     setFilters({ causa: "", fecha: "", marca: "", referencia: "" });
   };
 
-  const handleConsultar = () => {
-    // Aquí iría la lógica de filtro
-    console.log("Consultando con filtros:", filters);
+  const handleEditClick = (phone, index) => {
+    console.log("Esto contiene el phone" + phone);
+    setSelectedPhone({ ...phone, index });
+    setIsModalOpen("formEditar");
   };
 
-  const citas = [
+  const handleActualizar = () => {
+    const nuevasCitas = citas.map((item, i) =>
+      i === selectedPhone.index ? selectedPhone : item
+    );
+
+    setCitas(nuevasCitas);
+    setIsModalOpen(false);
+  };
+
+  const handleAgregar = () => {
+    setCitas([...citas, nuevoProducto]);
+    setIsModalOpen(false);
+    setNuevoProducto({
+      producto: "",
+      factor: "",
+      referencia: "",
+      precio: "",
+      cantidad: "",
+      fecha: "",
+    });
+  };
+
+  const [citas, setCitas] = useState([
     {
       producto: "AirPods A9",
       factor: "45.000",
@@ -77,16 +114,15 @@ const Sale = () => {
       fecha: "01/06/2024",
       accion: "",
     },
-    // ... el resto de datos
-  ];
+  ]);
 
   return (
     <div className="tecnico-container">
       <h2 className="titulo">Ventas</h2>
 
       <div className="filtros">
-        <div class="saleFiltros">
-          <div class="saleWrapper">
+        <div className="saleFiltros">
+          <div className="saleWrapper">
             <label>Producto</label>
             <select name="causa" value={filters.causa} onChange={handleChange}>
               <option value="">--Elegir producto--</option>
@@ -95,23 +131,159 @@ const Sale = () => {
               <option value="Batería">Cargador original Samsung 25W</option>
             </select>
           </div>
-          <div class="saleWrapper">
+          <div className="saleWrapper">
             <label>Cantidad</label>
             <input type="text" placeholder="Cantidad" />
           </div>
-          <div class="saleWrapper">
+          <div className="saleWrapper">
             <label>Fecha</label>
             <input type="date" />
           </div>
         </div>
-        <div class="saleAcction">
+        <div className="saleAcction">
           <button className="btn limpiar" onClick={handleLimpiar}>
             Limpiar
           </button>
-          <button className="btn consultar" onClick={handleConsultar}>
+          <button
+            className="btn consultar"
+            onClick={() => setIsModalOpen("formAgregar")}
+          >
             Agregar
           </button>
         </div>
+
+        <AgregarModal
+          isOpen={isModalOpen === "formAgregar"}
+          onClose={() => setIsModalOpen(false)}
+          className="formularioAgregar"
+        >
+          <div className="agregarForm">
+            <h3>Añadir venta</h3>
+            <input
+              type="text"
+              placeholder="Producto"
+              value={nuevoProducto.producto}
+              onChange={(e) =>
+                setNuevoProducto({ ...nuevoProducto, producto: e.target.value })
+              }
+            ></input>
+            <input
+              type="text"
+              placeholder="Marca"
+              value={nuevoProducto.factor}
+              onChange={(e) =>
+                setNuevoProducto({ ...nuevoProducto, factor: e.target.value })
+              }
+            ></input>
+            <input
+              type="text"
+              placeholder="Referencia"
+              value={nuevoProducto.referencia}
+              onChange={(e) =>
+                setNuevoProducto({
+                  ...nuevoProducto,
+                  referencia: e.target.value,
+                })
+              }
+            ></input>
+            <input
+              type="number"
+              placeholder="Precio"
+              value={nuevoProducto.precio}
+              onChange={(e) =>
+                setNuevoProducto({
+                  ...nuevoProducto,
+                  precio: e.target.value,
+                })
+              }
+            ></input>
+            <input
+              type="number"
+              placeholder="Cantidad"
+              value={nuevoProducto.cantidad}
+              onChange={(e) =>
+                setNuevoProducto({
+                  ...nuevoProducto,
+                  cantidad: e.target.value,
+                })
+              }
+            ></input>
+            <input
+              type="date"
+              placeholder="Fecha"
+              value={nuevoProducto.fecha}
+              onChange={(e) =>
+                setNuevoProducto({
+                  ...nuevoProducto,
+                  fecha: e.target.value,
+                })
+              }
+            ></input>
+            <button className="ventaAgregar" onClick={handleAgregar}>
+              Agregar
+            </button>
+          </div>
+        </AgregarModal>
+        <AgregarModal
+          isOpen={isModalOpen === "formEditar"}
+          onClose={() => setIsModalOpen(false)}
+          className="formularioEditarCelular"
+        >
+          <div className="agregarForm">
+            <h3>Editar celular</h3>
+            <input
+              type="text"
+              value={selectedPhone?.producto || ""}
+              onChange={(e) =>
+                setSelectedPhone({ ...selectedPhone, producto: e.target.value })
+              }
+            ></input>
+            <input
+              type="text"
+              value={selectedPhone?.factor || ""}
+              onChange={(e) =>
+                setSelectedPhone({ ...selectedPhone, factor: e.target.value })
+              }
+            ></input>
+            <input
+              type="text"
+              value={selectedPhone?.referencia || ""}
+              onChange={(e) =>
+                setSelectedPhone({
+                  ...selectedPhone,
+                  referencia: e.target.value,
+                })
+              }
+            ></input>
+            <input
+              type="text"
+              value={selectedPhone?.precio || ""}
+              onChange={(e) =>
+                setSelectedPhone({
+                  ...selectedPhone,
+                  precio: e.target.value,
+                })
+              }
+            ></input>
+            <input
+              type="number"
+              value={selectedPhone?.cantidad || ""}
+              onChange={(e) =>
+                setSelectedPhone({ ...selectedPhone, cantidad: e.target.value })
+              }
+            ></input>
+            <input
+              type="date"
+              value={selectedPhone?.fecha || ""}
+              onChange={(e) =>
+                setSelectedPhone({ ...selectedPhone, fecha: e.target.value })
+              }
+            ></input>
+            <button className="ventaAgregar" onClick={handleActualizar}>
+              Actualizar
+            </button>
+          </div>
+        </AgregarModal>
       </div>
 
       <table className="tabla">
@@ -138,6 +310,7 @@ const Sale = () => {
               <td>
                 <button
                   title="Editar"
+                  onClick={() => handleEditClick(item, index)}
                   style={{
                     background: "none",
                     border: "none",
@@ -150,6 +323,7 @@ const Sale = () => {
                     viewBox="0 0 24 24"
                     width="20"
                     fill="#000000"
+                    onClick={() => setIsModalOpen("formEditar")}
                   >
                     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.83z" />
                   </svg>
