@@ -1,44 +1,44 @@
 import React, { useState, useEffect } from "react";
-import "./Sale.css";
+import "./Accesorios.css";
 
-const API_URL = "http://localhost:8002/ventas";
-const CELULARES_API_URL = "http://localhost:8002/celulares";
+const API_URL = "http://localhost:8002/accesorios";
+const MARCAS_API_URL = "http://localhost:8002/marcas";
 
-export default function Sale() {
+export default function Accesorios() {
   const [form, setForm] = useState({
-    cliente: "",
-    cedula: "",
-    telefono: "",
-    celular: "",
-    cantidad: "",
+    nombre: "",
+    marca: "",
+    color: "",
+    precio: "",
+    peso: "",
   });
-  const [ventas, setVentas] = useState([]);
+  const [accesorios, setAccesorios] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [selectedVenta, setSelectedVenta] = useState(null);
-  const [celulares, setCelulares] = useState([]);
+  const [selectedAccesorio, setSelectedAccesorio] = useState(null);
+  const [marcas, setMarcas] = useState([]);
 
-  const fetchVentas = async () => {
+  const fetchAccesorios = async () => {
     const res = await fetch(API_URL);
     const data = await res.json();
-    setVentas(data);
+    setAccesorios(data);
   };
 
-  // Obtener celulares para el dropdown
-  const fetchCelulares = async () => {
+  // Obtener marcas para el dropdown
+  const fetchMarcas = async () => {
     try {
-      const res = await fetch(CELULARES_API_URL);
+      const res = await fetch(MARCAS_API_URL);
       const data = await res.json();
-      setCelulares(data);
+      setMarcas(data);
     } catch (err) {
-      setCelulares([]);
+      setMarcas([]);
     }
   };
 
   useEffect(() => {
-    fetchVentas();
-    fetchCelulares();
+    fetchAccesorios();
+    fetchMarcas();
   }, []);
 
   const handleChange = (e) => {
@@ -54,11 +54,11 @@ export default function Sale() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      !form.cliente ||
-      !form.cedula ||
-      !form.telefono ||
-      !form.celular ||
-      !form.cantidad
+      !form.nombre ||
+      !form.marca ||
+      !form.color ||
+      !form.precio ||
+      !form.peso
     ) {
       alert("Por favor, completa todos los campos.");
       return;
@@ -69,28 +69,22 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("Error al agregar la venta");
-      setForm({
-        cliente: "",
-        cedula: "",
-        telefono: "",
-        celular: "",
-        cantidad: "",
-      });
-      fetchVentas();
+      if (!res.ok) throw new Error("Error al agregar el accesorio");
+      setForm({ nombre: "", marca: "", color: "", precio: "", peso: "" });
+      fetchAccesorios();
     } catch (err) {
-      alert("No se pudo agregar la venta.");
+      alert("No se pudo agregar el accesorio.");
     }
   };
 
   const handleDelete = async (id) => {
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    fetchVentas();
+    fetchAccesorios();
   };
 
-  const handleEdit = (venta) => {
-    setEditingId(venta._id);
-    setEditForm({ ...venta });
+  const handleEdit = (accesorio) => {
+    setEditingId(accesorio._id);
+    setEditForm({ ...accesorio });
   };
 
   const handleCancelEdit = () => {
@@ -100,11 +94,11 @@ export default function Sale() {
 
   const handleSaveEdit = async (id) => {
     if (
-      !editForm.cliente ||
-      !editForm.cedula ||
-      !editForm.telefono ||
-      !editForm.celular ||
-      !editForm.cantidad
+      !editForm.nombre ||
+      !editForm.marca ||
+      !editForm.color ||
+      !editForm.precio ||
+      !editForm.peso
     ) {
       alert("Por favor, completa todos los campos para editar.");
       return;
@@ -115,91 +109,93 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editForm),
       });
-      if (!res.ok) throw new Error("Error al editar la venta");
+      if (!res.ok) throw new Error("Error al editar el accesorio");
       setEditingId(null);
       setEditForm({});
-      fetchVentas();
+      fetchAccesorios();
     } catch (err) {
-      alert("No se pudo editar la venta.");
+      alert("No se pudo editar el accesorio.");
     }
   };
 
   const handleView = async (id) => {
     const res = await fetch(`${API_URL}/${id}`);
     const data = await res.json();
-    setSelectedVenta(data);
+    setSelectedAccesorio(data);
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedVenta(null);
+    setSelectedAccesorio(null);
   };
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">GESTIÓN DE VENTAS</h2>
+      <h2 className="titulo">GESTIÓN DE ACCESORIOS</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">
-            <label className="form-label">Nombre del Cliente</label>
+            <label className="form-label">Nombre del accesorio</label>
             <input
               className="form-control"
-              name="cliente"
-              value={form.cliente}
+              name="nombre"
+              value={form.nombre}
               onChange={handleChange}
-              placeholder="Ej: Juan Pérez"
+              placeholder="Ej: Cargador USB"
             />
           </div>
           <div className="col-md-2">
-            <label className="form-label">Cédula</label>
-            <input
-              className="form-control"
-              name="cedula"
-              value={form.cedula}
-              onChange={handleChange}
-              placeholder="Ej: 1234567890"
-            />
-          </div>
-          <div className="col-md-2">
-            <label className="form-label">Teléfono</label>
-            <input
-              className="form-control"
-              name="telefono"
-              value={form.telefono}
-              onChange={handleChange}
-              placeholder="Ej: 3001234567"
-            />
-          </div>
-          <div className="col-md-3">
-            <label className="form-label">Celular vendido</label>
+            <label className="form-label">Marca</label>
             <select
               className="form-control"
-              name="celular"
-              value={form.celular}
+              name="marca"
+              value={form.marca}
               onChange={handleChange}
             >
-              <option value="">Seleccione un celular</option>
-              {celulares.map((c) => (
-                <option key={c._id} value={c.reference}>
-                  {c.reference}
+              <option value="">Seleccione una marca</option>
+              {marcas.map((m) => (
+                <option key={m._id} value={m.nombre}>
+                  {m.nombre}
                 </option>
               ))}
             </select>
           </div>
           <div className="col-md-2">
-            <label className="form-label">Cantidad</label>
+            <label className="form-label">Color</label>
             <input
               className="form-control"
-              name="cantidad"
-              type="number"
-              value={form.cantidad}
+              name="color"
+              value={form.color}
               onChange={handleChange}
-              min={1}
-              placeholder="0"
+              placeholder="Ej: Negro"
             />
           </div>
-          <div className="col-md-1 d-flex align-items-end">
+          <div className="col-md-2">
+            <label className="form-label">Precio</label>
+            <input
+              className="form-control"
+              name="precio"
+              type="number"
+              value={form.precio}
+              onChange={handleChange}
+              min={0}
+              placeholder="$"
+            />
+          </div>
+          <div className="col-md-2">
+            <label className="form-label">Peso</label>
+            <input
+              className="form-control"
+              name="peso"
+              type="number"
+              value={form.peso}
+              onChange={handleChange}
+              min={0}
+              placeholder="g"
+            />
+          </div>
+          <div className="col-md-2 d-flex align-items-end">
             <button className="btn w-100" type="submit">
               AGREGAR
             </button>
@@ -210,54 +206,38 @@ export default function Sale() {
       <table className="tabla">
         <thead>
           <tr>
-            <th>Cliente</th>
-            <th>Cédula</th>
-            <th>Teléfono</th>
-            <th>Celular</th>
-            <th>Cantidad</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Color</th>
+            <th>Precio</th>
+            <th>Peso</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          {ventas.map((v) => (
-            <tr key={v._id}>
-              {editingId === v._id ? (
+          {accesorios.map((a) => (
+            <tr key={a._id}>
+              {editingId === a._id ? (
                 <>
                   <td>
                     <input
                       className="form-control"
-                      name="cliente"
-                      value={editForm.cliente}
-                      onChange={handleEditChange}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      name="cedula"
-                      value={editForm.cedula}
-                      onChange={handleEditChange}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      name="telefono"
-                      value={editForm.telefono}
+                      name="nombre"
+                      value={editForm.nombre}
                       onChange={handleEditChange}
                     />
                   </td>
                   <td>
                     <select
                       className="form-control"
-                      name="celular"
-                      value={editForm.celular}
+                      name="marca"
+                      value={editForm.marca}
                       onChange={handleEditChange}
                     >
-                      <option value="">Seleccione un celular</option>
-                      {celulares.map((c) => (
-                        <option key={c._id} value={c.reference}>
-                          {c.reference}
+                      <option value="">Seleccione una marca</option>
+                      {marcas.map((m) => (
+                        <option key={m._id} value={m.nombre}>
+                          {m.nombre}
                         </option>
                       ))}
                     </select>
@@ -265,17 +245,35 @@ export default function Sale() {
                   <td>
                     <input
                       className="form-control"
-                      name="cantidad"
-                      type="number"
-                      value={editForm.cantidad}
+                      name="color"
+                      value={editForm.color}
                       onChange={handleEditChange}
-                      min={1}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="precio"
+                      type="number"
+                      value={editForm.precio}
+                      onChange={handleEditChange}
+                      min={0}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="peso"
+                      type="number"
+                      value={editForm.peso}
+                      onChange={handleEditChange}
+                      min={0}
                     />
                   </td>
                   <td>
                     <button
                       className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleSaveEdit(v._id)}
+                      onClick={() => handleSaveEdit(a._id)}
                       title="Guardar"
                     >
                       💾
@@ -291,11 +289,11 @@ export default function Sale() {
                 </>
               ) : (
                 <>
-                  <td>{v.cliente}</td>
-                  <td>{v.cedula}</td>
-                  <td>{v.telefono}</td>
-                  <td>{v.celular}</td>
-                  <td>{v.cantidad}</td>
+                  <td>{a.nombre}</td>
+                  <td>{a.marca}</td>
+                  <td>{a.color}</td>
+                  <td>{a.precio}</td>
+                  <td>{a.peso}</td>
                   <td>
                     <button
                       title="Ver"
@@ -305,7 +303,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleView(v._id)}
+                      onClick={() => handleView(a._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +323,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleEdit(v)}
+                      onClick={() => handleEdit(a)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +343,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleDelete(v._id)}
+                      onClick={() => handleDelete(a._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -364,7 +362,7 @@ export default function Sale() {
           ))}
         </tbody>
       </table>
-      {showModal && selectedVenta && (
+      {showModal && selectedAccesorio && (
         <div
           style={{
             position: "fixed",
@@ -402,25 +400,25 @@ export default function Sale() {
             >
               ×
             </button>
-            <h4>Detalle de la Venta</h4>
+            <h4>Detalle del Accesorio</h4>
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li>
-                <b>Cliente:</b> {selectedVenta.cliente}
+                <b>Nombre:</b> {selectedAccesorio.nombre}
               </li>
               <li>
-                <b>Cédula:</b> {selectedVenta.cedula}
+                <b>Marca:</b> {selectedAccesorio.marca}
               </li>
               <li>
-                <b>Teléfono:</b> {selectedVenta.telefono}
+                <b>Color:</b> {selectedAccesorio.color}
               </li>
               <li>
-                <b>Celular vendido:</b> {selectedVenta.celular}
+                <b>Precio:</b> {selectedAccesorio.precio}
               </li>
               <li>
-                <b>Cantidad:</b> {selectedVenta.cantidad}
+                <b>Peso:</b> {selectedAccesorio.peso}
               </li>
               <li>
-                <b>ID:</b> {selectedVenta._id}
+                <b>ID:</b> {selectedAccesorio._id}
               </li>
             </ul>
           </div>

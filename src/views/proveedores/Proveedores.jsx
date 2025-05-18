@@ -1,44 +1,30 @@
 import React, { useState, useEffect } from "react";
-import "./Sale.css";
+import "./Proveedores.css";
 
-const API_URL = "http://localhost:8002/ventas";
-const CELULARES_API_URL = "http://localhost:8002/celulares";
+const API_URL = "http://localhost:8002/proveedores";
 
-export default function Sale() {
+export default function Proveedores() {
   const [form, setForm] = useState({
-    cliente: "",
-    cedula: "",
+    razon: "",
+    nit: "",
+    direccion: "",
     telefono: "",
-    celular: "",
-    cantidad: "",
+    producto: "",
   });
-  const [ventas, setVentas] = useState([]);
+  const [proveedores, setProveedores] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [selectedVenta, setSelectedVenta] = useState(null);
-  const [celulares, setCelulares] = useState([]);
+  const [selectedProveedor, setSelectedProveedor] = useState(null);
 
-  const fetchVentas = async () => {
+  const fetchProveedores = async () => {
     const res = await fetch(API_URL);
     const data = await res.json();
-    setVentas(data);
-  };
-
-  // Obtener celulares para el dropdown
-  const fetchCelulares = async () => {
-    try {
-      const res = await fetch(CELULARES_API_URL);
-      const data = await res.json();
-      setCelulares(data);
-    } catch (err) {
-      setCelulares([]);
-    }
+    setProveedores(data);
   };
 
   useEffect(() => {
-    fetchVentas();
-    fetchCelulares();
+    fetchProveedores();
   }, []);
 
   const handleChange = (e) => {
@@ -54,11 +40,11 @@ export default function Sale() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      !form.cliente ||
-      !form.cedula ||
+      !form.razon ||
+      !form.nit ||
+      !form.direccion ||
       !form.telefono ||
-      !form.celular ||
-      !form.cantidad
+      !form.producto
     ) {
       alert("Por favor, completa todos los campos.");
       return;
@@ -69,28 +55,28 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("Error al agregar la venta");
+      if (!res.ok) throw new Error("Error al agregar el proveedor");
       setForm({
-        cliente: "",
-        cedula: "",
+        razon: "",
+        nit: "",
+        direccion: "",
         telefono: "",
-        celular: "",
-        cantidad: "",
+        producto: "",
       });
-      fetchVentas();
+      fetchProveedores();
     } catch (err) {
-      alert("No se pudo agregar la venta.");
+      alert("No se pudo agregar el proveedor.");
     }
   };
 
   const handleDelete = async (id) => {
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    fetchVentas();
+    fetchProveedores();
   };
 
-  const handleEdit = (venta) => {
-    setEditingId(venta._id);
-    setEditForm({ ...venta });
+  const handleEdit = (proveedor) => {
+    setEditingId(proveedor._id);
+    setEditForm({ ...proveedor });
   };
 
   const handleCancelEdit = () => {
@@ -100,11 +86,11 @@ export default function Sale() {
 
   const handleSaveEdit = async (id) => {
     if (
-      !editForm.cliente ||
-      !editForm.cedula ||
+      !editForm.razon ||
+      !editForm.nit ||
+      !editForm.direccion ||
       !editForm.telefono ||
-      !editForm.celular ||
-      !editForm.cantidad
+      !editForm.producto
     ) {
       alert("Por favor, completa todos los campos para editar.");
       return;
@@ -115,50 +101,60 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editForm),
       });
-      if (!res.ok) throw new Error("Error al editar la venta");
+      if (!res.ok) throw new Error("Error al editar el proveedor");
       setEditingId(null);
       setEditForm({});
-      fetchVentas();
+      fetchProveedores();
     } catch (err) {
-      alert("No se pudo editar la venta.");
+      alert("No se pudo editar el proveedor.");
     }
   };
 
   const handleView = async (id) => {
     const res = await fetch(`${API_URL}/${id}`);
     const data = await res.json();
-    setSelectedVenta(data);
+    setSelectedProveedor(data);
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedVenta(null);
+    setSelectedProveedor(null);
   };
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">GESTIÓN DE VENTAS</h2>
+      <h2 className="titulo">GESTIÓN DE PROVEEDORES</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">
-            <label className="form-label">Nombre del Cliente</label>
+            <label className="form-label">Razón social</label>
             <input
               className="form-control"
-              name="cliente"
-              value={form.cliente}
+              name="razon"
+              value={form.razon}
               onChange={handleChange}
-              placeholder="Ej: Juan Pérez"
+              placeholder="Ej: Proveedor S.A.S."
             />
           </div>
           <div className="col-md-2">
-            <label className="form-label">Cédula</label>
+            <label className="form-label">NIT</label>
             <input
               className="form-control"
-              name="cedula"
-              value={form.cedula}
+              name="nit"
+              value={form.nit}
               onChange={handleChange}
-              placeholder="Ej: 1234567890"
+              placeholder="Ej: 900123456"
+            />
+          </div>
+          <div className="col-md-3">
+            <label className="form-label">Dirección</label>
+            <input
+              className="form-control"
+              name="direccion"
+              value={form.direccion}
+              onChange={handleChange}
+              placeholder="Ej: Calle 123 #45-67"
             />
           </div>
           <div className="col-md-2">
@@ -171,32 +167,14 @@ export default function Sale() {
               placeholder="Ej: 3001234567"
             />
           </div>
-          <div className="col-md-3">
-            <label className="form-label">Celular vendido</label>
-            <select
-              className="form-control"
-              name="celular"
-              value={form.celular}
-              onChange={handleChange}
-            >
-              <option value="">Seleccione un celular</option>
-              {celulares.map((c) => (
-                <option key={c._id} value={c.reference}>
-                  {c.reference}
-                </option>
-              ))}
-            </select>
-          </div>
           <div className="col-md-2">
-            <label className="form-label">Cantidad</label>
+            <label className="form-label">Producto</label>
             <input
               className="form-control"
-              name="cantidad"
-              type="number"
-              value={form.cantidad}
+              name="producto"
+              value={form.producto}
               onChange={handleChange}
-              min={1}
-              placeholder="0"
+              placeholder="Ej: Celulares"
             />
           </div>
           <div className="col-md-1 d-flex align-items-end">
@@ -210,32 +188,40 @@ export default function Sale() {
       <table className="tabla">
         <thead>
           <tr>
-            <th>Cliente</th>
-            <th>Cédula</th>
+            <th>Razón social</th>
+            <th>NIT</th>
+            <th>Dirección</th>
             <th>Teléfono</th>
-            <th>Celular</th>
-            <th>Cantidad</th>
+            <th>Producto</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          {ventas.map((v) => (
-            <tr key={v._id}>
-              {editingId === v._id ? (
+          {proveedores.map((p) => (
+            <tr key={p._id}>
+              {editingId === p._id ? (
                 <>
                   <td>
                     <input
                       className="form-control"
-                      name="cliente"
-                      value={editForm.cliente}
+                      name="razon"
+                      value={editForm.razon}
                       onChange={handleEditChange}
                     />
                   </td>
                   <td>
                     <input
                       className="form-control"
-                      name="cedula"
-                      value={editForm.cedula}
+                      name="nit"
+                      value={editForm.nit}
+                      onChange={handleEditChange}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="direccion"
+                      value={editForm.direccion}
                       onChange={handleEditChange}
                     />
                   </td>
@@ -248,34 +234,17 @@ export default function Sale() {
                     />
                   </td>
                   <td>
-                    <select
-                      className="form-control"
-                      name="celular"
-                      value={editForm.celular}
-                      onChange={handleEditChange}
-                    >
-                      <option value="">Seleccione un celular</option>
-                      {celulares.map((c) => (
-                        <option key={c._id} value={c.reference}>
-                          {c.reference}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
                     <input
                       className="form-control"
-                      name="cantidad"
-                      type="number"
-                      value={editForm.cantidad}
+                      name="producto"
+                      value={editForm.producto}
                       onChange={handleEditChange}
-                      min={1}
                     />
                   </td>
                   <td>
                     <button
                       className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleSaveEdit(v._id)}
+                      onClick={() => handleSaveEdit(p._id)}
                       title="Guardar"
                     >
                       💾
@@ -291,11 +260,11 @@ export default function Sale() {
                 </>
               ) : (
                 <>
-                  <td>{v.cliente}</td>
-                  <td>{v.cedula}</td>
-                  <td>{v.telefono}</td>
-                  <td>{v.celular}</td>
-                  <td>{v.cantidad}</td>
+                  <td>{p.razon}</td>
+                  <td>{p.nit}</td>
+                  <td>{p.direccion}</td>
+                  <td>{p.telefono}</td>
+                  <td>{p.producto}</td>
                   <td>
                     <button
                       title="Ver"
@@ -305,7 +274,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleView(v._id)}
+                      onClick={() => handleView(p._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +294,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleEdit(v)}
+                      onClick={() => handleEdit(p)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +314,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleDelete(v._id)}
+                      onClick={() => handleDelete(p._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -364,7 +333,7 @@ export default function Sale() {
           ))}
         </tbody>
       </table>
-      {showModal && selectedVenta && (
+      {showModal && selectedProveedor && (
         <div
           style={{
             position: "fixed",
@@ -402,25 +371,25 @@ export default function Sale() {
             >
               ×
             </button>
-            <h4>Detalle de la Venta</h4>
+            <h4>Detalle del Proveedor</h4>
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li>
-                <b>Cliente:</b> {selectedVenta.cliente}
+                <b>Razón social:</b> {selectedProveedor.razon}
               </li>
               <li>
-                <b>Cédula:</b> {selectedVenta.cedula}
+                <b>NIT:</b> {selectedProveedor.nit}
               </li>
               <li>
-                <b>Teléfono:</b> {selectedVenta.telefono}
+                <b>Dirección:</b> {selectedProveedor.direccion}
               </li>
               <li>
-                <b>Celular vendido:</b> {selectedVenta.celular}
+                <b>Teléfono:</b> {selectedProveedor.telefono}
               </li>
               <li>
-                <b>Cantidad:</b> {selectedVenta.cantidad}
+                <b>Producto:</b> {selectedProveedor.producto}
               </li>
               <li>
-                <b>ID:</b> {selectedVenta._id}
+                <b>ID:</b> {selectedProveedor._id}
               </li>
             </ul>
           </div>

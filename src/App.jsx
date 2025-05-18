@@ -1,26 +1,31 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./views/Home";
-import Provider from "./views/provider/Provider";
-import Brands from "./views/brands/brands";
 import Celulares from "./views/products/Celulares";
+import Proveedores from "./views/proveedores/Proveedores";
+import Brands from "./views/brands/brands";;
 import Sale from "./views/vendedor/Sale";
-import Clientes from "./views/clientes/clientes";
+import Accesorios from "./views/accesorios/Accesorios";
+import MantenimientoTecnico from "./views/MantenimientoTecnico/MantenimientoTecnico";
+import "./App.css";
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/provider" element={<Provider />} />
-        <Route path="/brands" element={<Brands />} />
-        <Route path="/celulares" element={<Celulares />} />
-        <Route path="/vendedor" element={<Sale />} />
-        <Route path="/clientes" element={<Clientes />} />
-      </Routes>
-    </>
-  );
-}
 
-export default App;
+  function App() {
+    return (
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/celulares" element={<Celulares />} />
+          <Route path="/ventas" element={<Sale />} />
+          <Route path="/accesorios" element={<Accesorios />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/proveedores" element={<Proveedores />} />
+          <Route path="/mantenimiento-tecnico" element={<MantenimientoTecnico />} />
+        </Routes>
+      </>
+    );
+  }
+
+  export default App;

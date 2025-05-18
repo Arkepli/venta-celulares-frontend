@@ -1,44 +1,31 @@
 import React, { useState, useEffect } from "react";
-import "./Sale.css";
+import "./MantenimientoTecnico.css";
 
-const API_URL = "http://localhost:8002/ventas";
-const CELULARES_API_URL = "http://localhost:8002/celulares";
+const API_URL = "http://localhost:8002/mantenimiento-tecnico";
 
-export default function Sale() {
+export default function MantenimientoTecnico() {
   const [form, setForm] = useState({
     cliente: "",
-    cedula: "",
-    telefono: "",
     celular: "",
-    cantidad: "",
+    descripcion: "",
+    fecha: "",
+    tecnico: "",
+    notas: "",
   });
-  const [ventas, setVentas] = useState([]);
+  const [mantenimientos, setMantenimientos] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [selectedVenta, setSelectedVenta] = useState(null);
-  const [celulares, setCelulares] = useState([]);
+  const [selectedMantenimiento, setSelectedMantenimiento] = useState(null);
 
-  const fetchVentas = async () => {
+  const fetchMantenimientos = async () => {
     const res = await fetch(API_URL);
     const data = await res.json();
-    setVentas(data);
-  };
-
-  // Obtener celulares para el dropdown
-  const fetchCelulares = async () => {
-    try {
-      const res = await fetch(CELULARES_API_URL);
-      const data = await res.json();
-      setCelulares(data);
-    } catch (err) {
-      setCelulares([]);
-    }
+    setMantenimientos(data);
   };
 
   useEffect(() => {
-    fetchVentas();
-    fetchCelulares();
+    fetchMantenimientos();
   }, []);
 
   const handleChange = (e) => {
@@ -55,10 +42,11 @@ export default function Sale() {
     e.preventDefault();
     if (
       !form.cliente ||
-      !form.cedula ||
-      !form.telefono ||
       !form.celular ||
-      !form.cantidad
+      !form.descripcion ||
+      !form.fecha ||
+      !form.tecnico ||
+      !form.notas
     ) {
       alert("Por favor, completa todos los campos.");
       return;
@@ -69,28 +57,29 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("Error al agregar la venta");
+      if (!res.ok) throw new Error("Error al agregar el mantenimiento");
       setForm({
         cliente: "",
-        cedula: "",
-        telefono: "",
         celular: "",
-        cantidad: "",
+        descripcion: "",
+        fecha: "",
+        tecnico: "",
+        notas: "",
       });
-      fetchVentas();
+      fetchMantenimientos();
     } catch (err) {
-      alert("No se pudo agregar la venta.");
+      alert("No se pudo agregar el mantenimiento.");
     }
   };
 
   const handleDelete = async (id) => {
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    fetchVentas();
+    fetchMantenimientos();
   };
 
-  const handleEdit = (venta) => {
-    setEditingId(venta._id);
-    setEditForm({ ...venta });
+  const handleEdit = (mantenimiento) => {
+    setEditingId(mantenimiento._id);
+    setEditForm({ ...mantenimiento });
   };
 
   const handleCancelEdit = () => {
@@ -101,10 +90,11 @@ export default function Sale() {
   const handleSaveEdit = async (id) => {
     if (
       !editForm.cliente ||
-      !editForm.cedula ||
-      !editForm.telefono ||
       !editForm.celular ||
-      !editForm.cantidad
+      !editForm.descripcion ||
+      !editForm.fecha ||
+      !editForm.tecnico ||
+      !editForm.notas
     ) {
       alert("Por favor, completa todos los campos para editar.");
       return;
@@ -115,34 +105,34 @@ export default function Sale() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editForm),
       });
-      if (!res.ok) throw new Error("Error al editar la venta");
+      if (!res.ok) throw new Error("Error al editar el mantenimiento");
       setEditingId(null);
       setEditForm({});
-      fetchVentas();
+      fetchMantenimientos();
     } catch (err) {
-      alert("No se pudo editar la venta.");
+      alert("No se pudo editar el mantenimiento.");
     }
   };
 
   const handleView = async (id) => {
     const res = await fetch(`${API_URL}/${id}`);
     const data = await res.json();
-    setSelectedVenta(data);
+    setSelectedMantenimiento(data);
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedVenta(null);
+    setSelectedMantenimiento(null);
   };
 
   return (
     <div className="tecnico-container">
-      <h2 className="titulo">GESTIÓN DE VENTAS</h2>
+      <h2 className="titulo">GESTIÓN DE MANTENIMIENTO TÉCNICO</h2>
       <form onSubmit={handleSubmit} className="form-agregar-celular">
         <div className="row g-3 align-items-end">
           <div className="col-md-2">
-            <label className="form-label">Nombre del Cliente</label>
+            <label className="form-label">Nombre del cliente</label>
             <input
               className="form-control"
               name="cliente"
@@ -152,51 +142,53 @@ export default function Sale() {
             />
           </div>
           <div className="col-md-2">
-            <label className="form-label">Cédula</label>
+            <label className="form-label">Celular</label>
             <input
               className="form-control"
-              name="cedula"
-              value={form.cedula}
-              onChange={handleChange}
-              placeholder="Ej: 1234567890"
-            />
-          </div>
-          <div className="col-md-2">
-            <label className="form-label">Teléfono</label>
-            <input
-              className="form-control"
-              name="telefono"
-              value={form.telefono}
+              name="celular"
+              value={form.celular}
               onChange={handleChange}
               placeholder="Ej: 3001234567"
             />
           </div>
           <div className="col-md-3">
-            <label className="form-label">Celular vendido</label>
-            <select
-              className="form-control"
-              name="celular"
-              value={form.celular}
-              onChange={handleChange}
-            >
-              <option value="">Seleccione un celular</option>
-              {celulares.map((c) => (
-                <option key={c._id} value={c.reference}>
-                  {c.reference}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col-md-2">
-            <label className="form-label">Cantidad</label>
+            <label className="form-label">Descripción del problema</label>
             <input
               className="form-control"
-              name="cantidad"
-              type="number"
-              value={form.cantidad}
+              name="descripcion"
+              value={form.descripcion}
               onChange={handleChange}
-              min={1}
-              placeholder="0"
+              placeholder="Ej: No enciende la pantalla"
+            />
+          </div>
+          <div className="col-md-2">
+            <label className="form-label">Fecha de solicitud</label>
+            <input
+              className="form-control"
+              name="fecha"
+              type="date"
+              value={form.fecha}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-2">
+            <label className="form-label">Técnico asignado</label>
+            <input
+              className="form-control"
+              name="tecnico"
+              value={form.tecnico}
+              onChange={handleChange}
+              placeholder="Ej: Pedro Gómez"
+            />
+          </div>
+          <div className="col-md-1">
+            <label className="form-label">Notas</label>
+            <input
+              className="form-control"
+              name="notas"
+              value={form.notas}
+              onChange={handleChange}
+              placeholder="Notas del cliente"
             />
           </div>
           <div className="col-md-1 d-flex align-items-end">
@@ -211,17 +203,18 @@ export default function Sale() {
         <thead>
           <tr>
             <th>Cliente</th>
-            <th>Cédula</th>
-            <th>Teléfono</th>
             <th>Celular</th>
-            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Técnico</th>
+            <th>Notas</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          {ventas.map((v) => (
-            <tr key={v._id}>
-              {editingId === v._id ? (
+          {mantenimientos.map((m) => (
+            <tr key={m._id}>
+              {editingId === m._id ? (
                 <>
                   <td>
                     <input
@@ -234,48 +227,48 @@ export default function Sale() {
                   <td>
                     <input
                       className="form-control"
-                      name="cedula"
-                      value={editForm.cedula}
-                      onChange={handleEditChange}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      name="telefono"
-                      value={editForm.telefono}
-                      onChange={handleEditChange}
-                    />
-                  </td>
-                  <td>
-                    <select
-                      className="form-control"
                       name="celular"
                       value={editForm.celular}
                       onChange={handleEditChange}
-                    >
-                      <option value="">Seleccione un celular</option>
-                      {celulares.map((c) => (
-                        <option key={c._id} value={c.reference}>
-                          {c.reference}
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </td>
                   <td>
                     <input
                       className="form-control"
-                      name="cantidad"
-                      type="number"
-                      value={editForm.cantidad}
+                      name="descripcion"
+                      value={editForm.descripcion}
                       onChange={handleEditChange}
-                      min={1}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="fecha"
+                      type="date"
+                      value={editForm.fecha}
+                      onChange={handleEditChange}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="tecnico"
+                      value={editForm.tecnico}
+                      onChange={handleEditChange}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form-control"
+                      name="notas"
+                      value={editForm.notas}
+                      onChange={handleEditChange}
                     />
                   </td>
                   <td>
                     <button
                       className="btn btn-primary btn-sm me-1"
-                      onClick={() => handleSaveEdit(v._id)}
+                      onClick={() => handleSaveEdit(m._id)}
                       title="Guardar"
                     >
                       💾
@@ -291,11 +284,12 @@ export default function Sale() {
                 </>
               ) : (
                 <>
-                  <td>{v.cliente}</td>
-                  <td>{v.cedula}</td>
-                  <td>{v.telefono}</td>
-                  <td>{v.celular}</td>
-                  <td>{v.cantidad}</td>
+                  <td>{m.cliente}</td>
+                  <td>{m.celular}</td>
+                  <td>{m.descripcion}</td>
+                  <td>{m.fecha}</td>
+                  <td>{m.tecnico}</td>
+                  <td>{m.notas}</td>
                   <td>
                     <button
                       title="Ver"
@@ -305,7 +299,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleView(v._id)}
+                      onClick={() => handleView(m._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +319,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleEdit(v)}
+                      onClick={() => handleEdit(m)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +339,7 @@ export default function Sale() {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleDelete(v._id)}
+                      onClick={() => handleDelete(m._id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -364,7 +358,7 @@ export default function Sale() {
           ))}
         </tbody>
       </table>
-      {showModal && selectedVenta && (
+      {showModal && selectedMantenimiento && (
         <div
           style={{
             position: "fixed",
@@ -402,25 +396,28 @@ export default function Sale() {
             >
               ×
             </button>
-            <h4>Detalle de la Venta</h4>
+            <h4>Detalle del Mantenimiento</h4>
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li>
-                <b>Cliente:</b> {selectedVenta.cliente}
+                <b>Cliente:</b> {selectedMantenimiento.cliente}
               </li>
               <li>
-                <b>Cédula:</b> {selectedVenta.cedula}
+                <b>Celular:</b> {selectedMantenimiento.celular}
               </li>
               <li>
-                <b>Teléfono:</b> {selectedVenta.telefono}
+                <b>Descripción:</b> {selectedMantenimiento.descripcion}
               </li>
               <li>
-                <b>Celular vendido:</b> {selectedVenta.celular}
+                <b>Fecha:</b> {selectedMantenimiento.fecha}
               </li>
               <li>
-                <b>Cantidad:</b> {selectedVenta.cantidad}
+                <b>Técnico:</b> {selectedMantenimiento.tecnico}
               </li>
               <li>
-                <b>ID:</b> {selectedVenta._id}
+                <b>Notas:</b> {selectedMantenimiento.notas}
+              </li>
+              <li>
+                <b>ID:</b> {selectedMantenimiento._id}
               </li>
             </ul>
           </div>

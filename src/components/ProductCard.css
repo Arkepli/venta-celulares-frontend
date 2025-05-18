@@ -3,7 +3,6 @@
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    font-family: 'Inria Serif', serif;
     color: #0D0D0D;
     width: 200px;
     display: flex;
@@ -41,7 +40,6 @@
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
-    font-family: 'Inria Serif', serif;
     font-size: 0.9rem;
     cursor: pointer;
     margin-top: 0.5rem;
