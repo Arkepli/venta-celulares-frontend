@@ -24,7 +24,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <img onClick={() => handleNavigate("/")} src={logo} alt="Logo" className="logo" style={{ width: "95px" }} />
+        <img
+          onClick={() => handleNavigate("/")}
+          src={logo}
+          alt="Logo"
+          className="logo"
+          style={{ width: "95px" }}
+        />
         <button className="navbar-toggle" onClick={toggleMenu}>
           ☰
         </button>
@@ -35,8 +41,11 @@ const Navbar = () => {
         <li onClick={() => handleNavigate("/ventas")}>VENTAS</li>
         <li onClick={() => handleNavigate("/accesorios")}>ACCESORIOS</li>
         <li onClick={() => handleNavigate("/brands")}>MARCAS</li>
-        <li onClick={() => handleNavigate("/mantenimiento-tecnico")}>MANTENIMIENTO TÉCNICO</li>
+        <li onClick={() => handleNavigate("/mantenimiento-tecnico")}>
+          MANTENIMIENTO TÉCNICO
+        </li>
         <li onClick={() => handleNavigate("/proveedores")}>PROVEEDORES</li>
+        <li onClick={() => handleNavigate("/clientes")}>CLIENTES</li>
       </ul>
 
       <div className="navbar-right">
