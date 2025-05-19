@@ -1,19 +1,30 @@
-# Etapa 1: build
-FROM node:18 AS builder
+# Etapa 1: Construir la app
+FROM node:18-alpine AS builder
 
 WORKDIR /app
-COPY . .
+
+# Copiar archivos del proyecto
+COPY package*.json ./
 RUN npm install
+
+COPY . .
+
+# Construir la app con React (tomará .env.production si existe)
 RUN npm run build
 
-# Etapa 2: producción con Nginx
-FROM nginx:alpine
+# Etapa 2: Servir la app con "serve"
+FROM node:18-alpine
 
-# Copiar build a Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Reemplazar configuración por defecto de Nginx si lo necesitas
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Instalar "serve" globalmente
+RUN npm install -g serve
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Copiar la carpeta build desde la etapa anterior
+COPY --from=builder /app/build ./build
+
+# Exponer el puerto 4002
+EXPOSE 4002
+
+# Servir la aplicación en el puerto 4002
+CMD ["serve", "-s", "build", "-l", "4002"]
