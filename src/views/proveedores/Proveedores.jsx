@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Proveedores.css";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/proveedores`;
+const API_URL = `http://51.210.177.195:8002/proveedores`;
 
 export default function Proveedores() {
   const [form, setForm] = useState({

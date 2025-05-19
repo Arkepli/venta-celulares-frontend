@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/ventas`;
-const CELULARES_API_URL = `${process.env.REACT_APP_API_URL}/celulares`;
+const API_URL = `http://51.210.177.195:8002/ventas`;
+const CELULARES_API_URL = `http://51.210.177.195:8002/celulares`;
 
 export default function Sale() {
   const [form, setForm] = useState({

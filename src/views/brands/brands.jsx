@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Brands.css";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/marcas`;
+const API_URL = `http://51.210.177.195:8002/marcas`;
 
 export default function Brands() {
   const [form, setForm] = useState({

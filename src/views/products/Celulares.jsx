@@ -20,8 +20,8 @@ export default function ProductsPage() {
   const [selectedCelular, setSelectedCelular] = useState(null);
 
   // Backend URL
-  const API_URL = `${process.env.REACT_APP_API_URL}/celulares`;
-  const BRANDS_API_URL = `${process.env.REACT_APP_API_URL}/marcas`;
+  const API_URL = `http://51.210.177.195:8002/celulares`;
+  const BRANDS_API_URL = `http://51.210.177.195:8002/marcas`;
 
   // Fetch all celulares
   const fetchProducts = async () => {

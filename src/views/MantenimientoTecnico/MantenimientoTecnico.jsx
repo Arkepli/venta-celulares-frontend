@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MantenimientoTecnico.css";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/mantenimiento-tecnico`;
+const API_URL = `http://51.210.177.195:8002/mantenimiento-tecnico`;
 
 export default function MantenimientoTecnico() {
   const [form, setForm] = useState({
