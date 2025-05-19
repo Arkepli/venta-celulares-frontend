@@ -21,7 +21,7 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copiar la carpeta build desde la etapa anterior
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/dist ./build
 
 # Exponer el puerto 4002
 EXPOSE 4002
