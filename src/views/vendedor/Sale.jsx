@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./Sale.css";
 
-const API_URL = "http://localhost:8002/ventas";
-const CELULARES_API_URL = "http://localhost:8002/celulares";
+const API_URL = `http://167.114.155.66:8002/ventas`;
+const CELULARES_API_URL = `http://167.114.155.66:8002/celulares`;
 
 export default function Sale() {
   const [form, setForm] = useState({

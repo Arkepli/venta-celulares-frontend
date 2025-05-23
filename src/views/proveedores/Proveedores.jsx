@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Proveedores.css";
 
-const API_URL = "http://localhost:8002/proveedores";
+const API_URL = `http://167.114.155.66:8002/proveedores`;
 
 export default function Proveedores() {
   const [form, setForm] = useState({
