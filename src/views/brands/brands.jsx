@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Brands.css";
+import "./brands.css";
 
 const API_URL = "http://localhost:8002/marcas";
 
